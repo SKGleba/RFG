@@ -14,6 +14,11 @@ int main(int argc, char **argv){
 	if(argc < 2) {
 		return -1;
 	}
+	if (strcmp("git", argv[1]) == 0) {
+		system("cd RFG && git add db.crypt14 && git add sr.crypt14 && git commit -m \"AutoUpdate\" && git push");
+		return 1;
+	}
+		
 	sprintf(cbuff, "curl %s |head -c 14000 > temp.html", argv[1]);
 	system(cbuff);
 	system("grep -oP '(?<=status_id=).*' temp.html > temp.status");
@@ -67,14 +72,14 @@ int main(int argc, char **argv){
 	statbuf[19] = 0x69;
 	etrbuf[19] = (argc > 2) ? 0x34 : 0x69;
 	
-	fp = fopen("sr.crypt14", "ab");
+	fp = fopen("RFG/sr.crypt14", "ab");
 	if (fp == NULL)
 		return 0;
 	fseek(fp, 0L, SEEK_END);
 	fwrite(statbuf, 20, 1, fp);
 	fclose(fp);
 	
-	fp = fopen("db.crypt14", "ab");
+	fp = fopen("RFG/db.crypt14", "ab");
 	if (fp == NULL)
 		return 0;
 	fseek(fp, 0L, SEEK_END);
