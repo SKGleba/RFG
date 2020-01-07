@@ -106,7 +106,7 @@ int getEntry(uint8_t mode) {
 		return 0;
 	fseek(fp, 0L, SEEK_END);
 	fwrite(statbuf, 20, 1, fp);
-	printf("%s x1... ");
+	printf("%s x1... ", statbuf);
 	if (etr2buf[0] > 0) {
 		fwrite(statbuf, 20, 1, fp);
 		printf("x2... ");
