@@ -12,8 +12,8 @@
 int getEntry(uint8_t mode) {
 
 	int sz = 0, off = 0;
-	char statbuf[20], etr1buf[20], etr2buf[20], etr3buf[20], etr4buf[20], tempbuf[9];
-	
+	char statbuf[20], etr1buf[20], etr2buf[20], etr3buf[20], etr4buf[20], tempbuf[9];	
+		
 	system("grep -oP '(?<=status_id=).*' temp.html > temp.status");
 	system("grep -oP '(?<=https://twitter.com/i/videos/).*' temp.html > temp.tvid");
 	system("grep -oP '(?<=<meta  property=\"og:image\" content=\"https://pbs.twimg.com/media/).*' temp.html > temp.timg");
@@ -32,6 +32,7 @@ int getEntry(uint8_t mode) {
 	fseek(fp, 0L, SEEK_SET);
 	if (sz < 19) {
 		fclose(fp);
+		printf("error- status file too small!!\n");
 		return 0;
 	} else {
 		fread(statbuf, 19, 1, fp);
@@ -47,6 +48,7 @@ int getEntry(uint8_t mode) {
 	fseek(fp, 0L, SEEK_SET);
 	if (sz < 19) {
 		fclose(fp);
+		printf("vid file too small, checking img\n");
 		sz = 0;
 	} else {
 		fread(etr1buf, 19, 1, fp);
@@ -63,6 +65,7 @@ int getEntry(uint8_t mode) {
 		fseek(fp, 0L, SEEK_SET);
 		if (sz < 19) {
 			fclose(fp);
+			printf("error- img file too small!!\n");
 			return 0;
 		}
 		fread(etr1buf, 19, 1, fp);
@@ -103,16 +106,21 @@ int getEntry(uint8_t mode) {
 		return 0;
 	fseek(fp, 0L, SEEK_END);
 	fwrite(statbuf, 20, 1, fp);
+	printf("%s x1... ", statbuf);
 	if (etr2buf[0] > 0) {
 		fwrite(statbuf, 20, 1, fp);
+		printf("x2... ");
 		if (etr3buf[0] > 0) {
 			fwrite(statbuf, 20, 1, fp);
+			printf("x3... ");
 			if (etr4buf[0] > 0) {
 				fwrite(statbuf, 20, 1, fp);
+				printf("x4... ");
 			}
 		}
 	}
 	fclose(fp);
+	printf("OK!\n");
 	
 	printf("writing content...\n");
 	fp = fopen("RFG/dbs/db.crypt15", "ab");
@@ -120,12 +128,16 @@ int getEntry(uint8_t mode) {
 		return 0;
 	fseek(fp, 0L, SEEK_END);
 	fwrite(etr1buf, 20, 1, fp);
+	printf("1: %s\n", etr1buf);
 	if (etr2buf[0] > 0) {
 		fwrite(etr2buf, 20, 1, fp);
+		printf("2: %s\n", etr2buf);
 		if (etr3buf[0] > 0) {
 			fwrite(etr3buf, 20, 1, fp);
+			printf("3: %s\n", etr3buf);
 			if (etr4buf[0] > 0) {
 				fwrite(etr4buf, 20, 1, fp);
+				printf("4: %s\n", etr4buf);
 			}
 		}
 	}
