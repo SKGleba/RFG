@@ -2,28 +2,18 @@ package com.skgleba.rfg2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -31,26 +21,21 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.util.Random;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -61,7 +46,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private View mControlsView;
     public String dburl = "https://raw.githubusercontent.com/SKGleba/RFG/master/dbs/db.crypt15";
     public String nfurl = "https://raw.githubusercontent.com/SKGleba/RFG/master/dbs/sr.crypt15";
-    public String apkurl = "https://raw.githubusercontent.com/SKGleba/RFG/master/android/cur-rfg.apk";
+    public String apkurl = "https://raw.githubusercontent.com/SKGleba/RFG/master/CLIENT-android/cur-rfg.apk";
     private WebView mWebView;
     private PhotoView photoView;
     public byte[] arrout = new byte[19];
